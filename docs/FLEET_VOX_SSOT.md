@@ -1,5 +1,7 @@
 # Fleet use of Voxelsexplorer (MagicaVoxel ingest)
 
+**Repo:** https://github.com/MolochDaGod/Voxelsexplorer
+
 This repo is **Windows Explorer thumbnails + CLI raster/mesh for `.vox` / `.qb`**.  
 It is **not** GRUDOX play, not a second bag DB, not a second Three.js voxel engine.
 

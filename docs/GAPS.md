@@ -1,5 +1,7 @@
 # Gaps → solutions (Voxelsexplorer + fleet)
 
+**Repo:** https://github.com/MolochDaGod/Voxelsexplorer · parent [README](../README.md)
+
 | Gap | Solution | Status |
 |-----|----------|--------|
 | Clone without submodules = empty Core | `git submodule update --init --recursive` | Required |

@@ -1,14 +1,53 @@
-# Voxel Windows Explorer Thumbnails
+# Voxelsexplorer
 
-**Fleet (Grudge):** this sln **ingests** MagicaVoxel / Qubicle. Play GLBs, Railway bag, and GRUDOX explorer stay in existing SSOT — see [docs/FLEET_VOX_SSOT.md](docs/FLEET_VOX_SSOT.md) and [docs/GAPS.md](docs/GAPS.md).
+Windows Explorer thumbnails + CLI for MagicaVoxel / Qubicle / Voxlap.  
+Fork: [MolochDaGod/Voxelsexplorer](https://github.com/MolochDaGod/Voxelsexplorer) · upstream [Arlorean/Voxels](https://github.com/Arlorean/Voxels).
+
+**This is ingest, not a playable game.** Play GLBs, Railway bag, and GRUDOX explorer stay in fleet SSOT.
+
+| Doc | What |
+|-----|------|
+| [docs/FLEET_VOX_SSOT.md](docs/FLEET_VOX_SSOT.md) | CDN / Railway / convert law |
+| [docs/GAPS.md](docs/GAPS.md) | Gaps → solutions |
+
+## Clone
 
 ```text
 git clone --recurse-submodules https://github.com/MolochDaGod/Voxelsexplorer.git
-node scripts/vox-fleet.mjs validate Voxels.CommandLine
-# C#: Voxels.CommandLine --validate wizard.vox
-# C#: Voxels.CommandLine --obj wizard.vox
-# Production GLB: ObjectStore  npm run convert -- vox2glb file.vox -o out.glb --height 1.1
+cd Voxelsexplorer
+# if you already cloned without submodules:
+git submodule update --init --recursive
 ```
+
+## Validate + convert
+
+```text
+# Magic check (no C#):
+node scripts/vox-fleet.mjs validate Voxels.CommandLine
+
+# After building Voxels.CommandLine:
+Voxels.CommandLine.exe --validate wizard.vox
+Voxels.CommandLine.exe --obj wizard.vox
+
+# Production GLB (fleet baker — not this sln):
+cd path/to/ObjectStore
+npm run convert -- vox2glb path/to/file.vox -o dist/file.glb --height 1.1
+```
+
+### CommandLine flags
+
+| Flag | Meaning |
+|------|---------|
+| *(default)* | PNG + SVG |
+| `--png` `--svg` `--gif` | Raster outputs |
+| `--obj` | Wavefront OBJ, Y-up (same axis as `vox2glb`) |
+| `--validate` | Magic + flatten; exit 1 on fail |
+| `--vox` | PNG → `.vox` |
+| `--3D` | Unity 3D texture atlas PNG |
+| `-w` `-y` `-x` | Size / yaw / pitch |
+| `--recursive` | Walk directories |
+
+Never load raw `.vox` in the browser. Player roster / bag = Railway (`?era=voxel`), not D1.
 
 The [Voxels.Setup.exe](https://github.com/Arlorean/Voxels/releases/latest) provides Windows Explorer Thumbnails for:
 - [MagicaVoxel](https://ephtracy.github.io/) [**.vox** files](https://github.com/ephtracy/voxel-model/blob/master/MagicaVoxel-file-format-vox.txt)
@@ -47,11 +86,10 @@ PNG             |  SVG
 
 # Setup Build
 
-1. Install ``Visual Studio 2017``
+1. Visual Studio **2022** + WiX v3.11 (or current WiX that still builds this wixproj)
 1. Open ``Voxels.sln``
-1. Install [WiX Toolset](http://wixtoolset.org/) v3.11
-1. Install [Wix Toolset Visual Studio 2017 Extension](https://marketplace.visualstudio.com/items?itemName=RobMensching.WixToolsetVisualStudio2017Extension)
-1. Build ``Voxels.Setup`` to create the [Voxels.Setup.exe](https://github.com/Arlorean/Voxels/releases/download/v1.1/Voxels.Setup.exe) setup file. 
+1. Restore NuGet (SkiaSharp 1.59)
+1. Build ``Voxels.Setup`` for the installer exe (upstream release still listed below) 
 
 # Third Party Credits
 
