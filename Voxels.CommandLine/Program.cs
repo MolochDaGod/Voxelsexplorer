@@ -33,6 +33,12 @@ namespace Voxels.CommandLine {
         [Option(Description = "Output a 3D Texture for Unity.", LongName = "3D")]
         public bool Texture3D { get; set; }
 
+        [Option(Description = "Validate voxel files (magic, flatten, size). No write.")]
+        public bool Validate { get; set; }
+
+        [Option(Description = "Output Wavefront OBJ (Y-up, for grudge-convert).")]
+        public bool OBJ { get; set; }
+
         [Option(Description = "The number of frames for the animated GIF.")]
         public int Frames { get; set; } = 30;
 
@@ -58,6 +64,13 @@ namespace Voxels.CommandLine {
             // Initialize SkiaSharp
             NativeLibrary.Initialize();
 
+            if (Validate) {
+                var failed = 0;
+                ValidateFiles(Filenames, ref failed);
+                if (failed > 0) Environment.ExitCode = 1;
+                return;
+            }
+
             if (VOX) {
                 var colorsUsed = new HashSet<Color>() { Color.Transparent };
                 ExtractColors(Filenames, colorsUsed);
@@ -72,7 +85,7 @@ namespace Voxels.CommandLine {
             }
             else {
                 // If none of PNG, SVG or GIF is specified, output PNG and SVG (previous default)
-                if (!PNG && !SVG && !GIF && !Texture3D) {
+                if (!PNG && !SVG && !GIF && !Texture3D && !OBJ) {
                     PNG = SVG = true;
                 }
 
@@ -134,9 +147,28 @@ namespace Voxels.CommandLine {
 
                                 WriteOutput(filename, $"({columns}x{rows}).png", Slicer.RenderTexture3D(voxelData, columns, rows));
                             }
+                            if (OBJ) {
+                                var objPath = string.Format(Output, Path.ChangeExtension(filename, null), "obj");
+                                ObjExport.Write(voxelData, objPath);
+                            }
                         }
                     }
                 }
+            }
+        }
+
+        void ValidateFiles(string[] filenames, ref int failed) {
+            foreach (var filename in filenames) {
+                if (Directory.Exists(filename)) {
+                    ValidateFiles(Directory.GetFiles(filename), ref failed);
+                    if (Recursive) ValidateFiles(Directory.GetDirectories(filename), ref failed);
+                    continue;
+                }
+                var ext = Path.GetExtension(filename).ToLowerInvariant();
+                if (ext != ".vox" && ext != ".qb") continue;
+                var r = VoxelValidate.Check(filename);
+                Console.WriteLine(VoxelValidate.ToLine(r));
+                if (!r.Ok) failed++;
             }
         }
 

@@ -1,5 +1,15 @@
 # Voxel Windows Explorer Thumbnails
 
+**Fleet (Grudge):** this sln **ingests** MagicaVoxel / Qubicle. Play GLBs, Railway bag, and GRUDOX explorer stay in existing SSOT — see [docs/FLEET_VOX_SSOT.md](docs/FLEET_VOX_SSOT.md) and [docs/GAPS.md](docs/GAPS.md).
+
+```text
+git clone --recurse-submodules https://github.com/MolochDaGod/Voxelsexplorer.git
+node scripts/vox-fleet.mjs validate Voxels.CommandLine
+# C#: Voxels.CommandLine --validate wizard.vox
+# C#: Voxels.CommandLine --obj wizard.vox
+# Production GLB: ObjectStore  npm run convert -- vox2glb file.vox -o out.glb --height 1.1
+```
+
 The [Voxels.Setup.exe](https://github.com/Arlorean/Voxels/releases/latest) provides Windows Explorer Thumbnails for:
 - [MagicaVoxel](https://ephtracy.github.io/) [**.vox** files](https://github.com/ephtracy/voxel-model/blob/master/MagicaVoxel-file-format-vox.txt)
 - [Voxlap Engine](http://advsys.net/ken/voxlap.htm) [**.vox** files](http://advsys.net/ken/build.htm)
@@ -27,13 +37,13 @@ PNG             |  SVG
 
 # Command Line Build
 
-1. Install ``Visual Studio 2017``
+1. Install Visual Studio **2022** (or 2019) with .NET desktop + .NET Framework 4.8
+1. `git submodule update --init --recursive`
 1. Open ``Voxels.sln``
 1. Set ``Voxels.CommandLine`` as the startup project
-1. Set ``Debug -> Command line arguments`` to be ``wizard.vox``
-1. Press ``Start`` in Visual Studio 2017
-1. Open Windows Explorer on the ``Voxels.CommandLine\bin\Debug directory``
-1. There should be two new files: ``wizard.png`` and ``wizard.svg``
+1. Arguments: ``wizard.vox`` or ``--validate wizard.vox`` or ``--obj wizard.vox``
+1. Press Start
+1. Output: ``wizard.png`` / ``wizard.svg`` (default), or ``wizard.obj`` with ``--obj``
 
 # Setup Build
 
