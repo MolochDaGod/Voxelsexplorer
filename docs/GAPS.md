@@ -14,3 +14,5 @@
 | MagicaVoxel n-TRN scenes | Core already Flatten(); validate after flatten | Use Flatten |
 | Shell context menu PNG | Still TODO upstream | Not this pass |
 | 100× voxel props | `--height` 1.1 m props / human 1.8 m | SI |
+| CLI missing `vox2glb` | Wired in `convert.mjs` + batch `.vox` | Ran 2026-08-18 |
+| Spaceships multipack | Isolate ships — do not `--height` the fused 28 m blob | CHECK |

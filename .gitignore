@@ -34,4 +34,5 @@
 /Voxels.Setup/bin/Release
 /Voxels.Setup/obj/Release
 *.user
+/dist/
 /Voxels.Setup/Voxels.Setup.wixproj.user

@@ -49,6 +49,8 @@ npm run convert -- vox2glb path/to/file.vox -o dist/file.glb --height 1.1
 
 Never load raw `.vox` in the browser. Player roster / bag = Railway (`?era=voxel`), not D1.
 
+**Last real bake:** [docs/VERIFY_RUN.md](docs/VERIFY_RUN.md) — 24/25 PASS (Spaceships fused pack CHECK).
+
 The [Voxels.Setup.exe](https://github.com/Arlorean/Voxels/releases/latest) provides Windows Explorer Thumbnails for:
 - [MagicaVoxel](https://ephtracy.github.io/) [**.vox** files](https://github.com/ephtracy/voxel-model/blob/master/MagicaVoxel-file-format-vox.txt)
 - [Voxlap Engine](http://advsys.net/ken/voxlap.htm) [**.vox** files](http://advsys.net/ken/build.htm)
